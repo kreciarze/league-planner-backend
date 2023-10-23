@@ -5,7 +5,7 @@ CONTAINER_NAME=django
 .PHONY: Makefile
 
 dc/% dc_%:  ### Run any action inside docker (replace % with any action from below)
-	docker-compose run -w /code/ $(CONTAINER_NAME) make $*
+	docker compose run -w /code/ $(CONTAINER_NAME) make $*
 
 all: check test  ### Run all checks and tests (lints, mypy, tests...)
 
@@ -77,6 +77,9 @@ bash:  ### Open bash console (useful when prefixed with dc/, as it opens bash in
 
 ps:  ### Open python console (useful when prefixed with dc/, as it opens python console inside docker)
 	ipython
+
+migrate:
+	python src/manage.py migrate
 
 ### Help
 help: ## Show this help

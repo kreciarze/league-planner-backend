@@ -37,6 +37,7 @@ ipython = "^8.14.0"
 isort = {version = "^5.12.0", extras = ["colors"]}
 mypy = "^1.0.1"
 pytest = "^7.4.2"
+pytest-cov = "^4.0.0"
 pytest-django = "^4.5.2"
 pytest-factoryboy = "^2.5.1"
 
@@ -70,6 +71,7 @@ ignore_unused = [
     "ipython",
     "poetry-dynamic-versioning",
     "psycopg2-binary",
+    "pytest-cov",
 
     # used in Dockerfile
     "dumb-init",
@@ -117,6 +119,7 @@ exclude = ["/migrations/", "/tests/"]
 
 # pytest settings
 [tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "league_planner.settings"
 python_files = ["tests.py", "test_*.py", "*_tests.py"]
 addopts = "--strict-markers -p no:warnings --cov=. --cov-fail-under=90 --cov-config=.coveragerc"
 markers = [
