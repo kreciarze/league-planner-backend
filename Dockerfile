@@ -48,5 +48,5 @@ WORKDIR /code/src
 ENTRYPOINT ["/code/docker-entrypoint.sh"]
 
 # Runs the production server
-CMD ["gunicorn", "--config", "gunicorn_config.py", "omnichannel.wsgi:application"]
+CMD ["gunicorn", "--config", "gunicorn_config.py", "league_planner.wsgi:application"]
 
