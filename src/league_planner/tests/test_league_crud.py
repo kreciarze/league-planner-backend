@@ -25,10 +25,12 @@ def test_leagues_list(
     league_factory: "LeagueFactory",
 ) -> None:
     url = reverse("leagues-list")
-    for i in range(10):
+    league = league_factory.create(name="league0")
+    for i in range(1, 10):
         league_factory.create(name=f"league{i}")
     response = api_client.get(url)
     assert response.status_code == status.HTTP_200_OK, response
+    assert response.data["results"][0]["owner_login"] == league.owner.username
     assert response.data["count"] == 10
 
 
