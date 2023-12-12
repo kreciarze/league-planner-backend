@@ -54,6 +54,9 @@ def test_teams_filtering(api_client: "APIClient", league_factory: "LeagueFactory
     assert response.status_code == status.HTTP_200_OK, response
     assert response.data["count"] == 5
     assert response.data["results"][0]["league"] == league1.pk
+    assert response.data["results"][0]["name"] is not None
+    assert response.data["results"][0]["city"] is not None
+    assert response.data["results"][0]["number"] is None
 
 
 def test_team_detail(
@@ -71,6 +74,7 @@ def test_team_detail(
     assert response.data["league"] == league.pk
     assert response.data["name"] == team.name
     assert response.data["city"] == team.city
+    assert response.data["number"] == team.number
 
 
 def test_team_create(

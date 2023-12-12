@@ -16,6 +16,9 @@ class Team(models.Model):
         max_length=50,
         default="Not Set",
     )
+    number = models.IntegerField(
+        null=True,
+    )
 
     class Meta:
         ordering = ["id"]

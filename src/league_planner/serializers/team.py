@@ -9,10 +9,11 @@ class TeamSerializer(serializers.ModelSerializer):
     league = serializers.PrimaryKeyRelatedField(queryset=League.objects.all())
     name = serializers.CharField()
     city = serializers.CharField(required=False)
+    number = serializers.IntegerField(required=False)
 
     class Meta:
         model = Team
-        fields = ("id", "league", "name", "city")
+        fields = ("id", "league", "name", "city", "number")
 
 
 class ScoreboardSerializer(TeamSerializer):
@@ -20,4 +21,4 @@ class ScoreboardSerializer(TeamSerializer):
 
     class Meta:
         model = Team
-        fields = ("id", "league", "name", "city", "score")
+        fields = ("id", "league", "name", "city", "number", "score")

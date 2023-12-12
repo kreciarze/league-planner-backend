@@ -78,6 +78,9 @@ bash:  ### Open bash console (useful when prefixed with dc/, as it opens bash in
 ps:  ### Open python console (useful when prefixed with dc/, as it opens python console inside docker)
 	ipython
 
+generate_migration:
+	python src/manage.py makemigrations
+
 migrate:
 	python src/manage.py migrate
 
