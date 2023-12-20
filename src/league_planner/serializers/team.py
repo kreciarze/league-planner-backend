@@ -16,6 +16,20 @@ class TeamSerializer(serializers.ModelSerializer):
         fields = ("id", "league", "name", "city", "number")
 
 
+class TeamImageSerializer(serializers.Serializer):
+    image = serializers.ImageField()
+
+    class Meta:
+        model = Team
+        fields = ("image",)
+
+    def update(self, instance, validated_data):
+        instance.image = validated_data.get("image", instance.image)
+        instance.image.name = f"team_{instance.id}.png"
+        instance.save()
+        return instance
+
+
 class ScoreboardSerializer(TeamSerializer):
     score = serializers.IntegerField(read_only=True)
 

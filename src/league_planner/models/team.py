@@ -19,6 +19,10 @@ class Team(models.Model):
     number = models.IntegerField(
         null=True,
     )
+    image = models.ImageField(
+        upload_to="images/teams/",
+        null=True,
+    )
 
     class Meta:
-        ordering = ["id"]
+        ordering = ["number"]

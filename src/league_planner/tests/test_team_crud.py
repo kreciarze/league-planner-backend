@@ -57,6 +57,7 @@ def test_teams_filtering(api_client: "APIClient", league_factory: "LeagueFactory
     assert response.data["results"][0]["name"] is not None
     assert response.data["results"][0]["city"] is not None
     assert response.data["results"][0]["number"] is None
+    assert "image" not in response.data["results"][0]
 
 
 def test_team_detail(

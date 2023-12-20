@@ -13,6 +13,7 @@ djangorestframework = "^3.14.0"
 django-environ = "^0.4.5"
 django-filter = "^23.3"
 dumb-init = "^1.2.5.post1"
+pillow = "^10.1.0"
 poetry-dynamic-versioning = "^0.25.0"
 psycopg2-binary = "^2.8.4"
 
@@ -69,6 +70,7 @@ ignore_unused = [
     # used indirectly
     "DateTime",
     "ipython",
+    "pillow",  # ImageField
     "poetry-dynamic-versioning",
     "psycopg2-binary",
     "pytest-cov",

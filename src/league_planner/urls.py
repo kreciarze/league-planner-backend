@@ -8,9 +8,9 @@ from league_planner.views.team import TeamViewSet
 from league_planner.views.user import CreateUserView, LoginView
 
 router = SimpleRouter()
-router.register("leagues", LeagueViewSet, "leagues")
-router.register("teams", TeamViewSet, "teams")
-router.register("matches", MatchViewSet, "matches")
+router.register("leagues", LeagueViewSet, "league")
+router.register("teams", TeamViewSet, "team")
+router.register("matches", MatchViewSet, "match")
 router.register("register", CreateUserView, "register")
 
 
