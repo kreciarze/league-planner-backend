@@ -23,7 +23,7 @@ class TeamImageSerializer(serializers.Serializer):
         model = Team
         fields = ("image",)
 
-    def update(self, instance, validated_data):
+    def update(self, instance: Team, validated_data: dict) -> Team:
         instance.image = validated_data.get("image", instance.image)
         instance.image.name = f"team_{instance.id}.png"
         instance.save()

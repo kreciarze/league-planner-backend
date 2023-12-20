@@ -101,5 +101,5 @@ REST_FRAMEWORK = {
 FE_DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
 DEFAULT_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"

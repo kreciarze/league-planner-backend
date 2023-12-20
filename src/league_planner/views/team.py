@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from rest_framework import viewsets, status
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.mixins import (
     CreateModelMixin,
@@ -16,7 +16,7 @@ from league_planner.filters import FilterByLeague
 from league_planner.models.team import Team
 from league_planner.pagination import Pagination
 from league_planner.permissions import IsLeagueResourceOwner
-from league_planner.serializers.team import TeamSerializer, TeamImageSerializer
+from league_planner.serializers.team import TeamImageSerializer, TeamSerializer
 
 
 class TeamViewSet(
@@ -46,7 +46,7 @@ class TeamViewSet(
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
     @action(
         methods=["GET"],
         detail=True,
@@ -60,7 +60,7 @@ class TeamViewSet(
         except ValueError:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return HttpResponse(image, content_type="image/png")
-    
+
     @action(
         methods=["DELETE"],
         detail=True,

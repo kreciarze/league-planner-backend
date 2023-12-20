@@ -39,7 +39,7 @@ class IsLeagueResourceOwner(IsLeagueOwner):
                 league = League.objects.get(id=request.data.get("league"))
             except League.DoesNotExist:
                 league = view.get_object().league
-            
+
             if request.user != league.owner:
                 return False
         return super().has_permission(request, view)
