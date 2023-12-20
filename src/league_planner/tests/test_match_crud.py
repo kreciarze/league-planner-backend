@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from typing import TYPE_CHECKING
 
 import pytest
+from django.forms import model_to_dict
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
@@ -68,8 +69,8 @@ def test_match_detail(
     response = api_client.get(url)
     assert response.status_code == status.HTTP_200_OK, response
     assert response.data["league"] == league.pk
-    assert response.data["host"] == host.pk
-    assert response.data["visitor"] == visitor.pk
+    assert response.data["host"] == model_to_dict(host, exclude=["image"])
+    assert response.data["visitor"] == model_to_dict(visitor, exclude=["image"])
     assert response.data["host_score"] == create_match_data["host_score"]
     assert response.data["visitor_score"] == create_match_data["visitor_score"]
     assert response.data["address"] == create_match_data["address"]
