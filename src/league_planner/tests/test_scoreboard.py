@@ -5,33 +5,33 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from .factories import LeagueFactory, MatchFactory, TeamFactory
+from .factories import MatchFactory, SeasonFactory, TeamFactory
 
 pytestmark = [pytest.mark.django_db]
 
 
 def test_scoreboard(
-    api_client: "APIClient",
-    league_factory: "LeagueFactory",
-    team_factory: "TeamFactory",
-    match_factory: "MatchFactory",
+    api_client: APIClient,
+    season_factory: SeasonFactory,
+    team_factory: TeamFactory,
+    match_factory: MatchFactory,
 ) -> None:
-    league = league_factory.create()
-    url = reverse("leagues-detail", args=[league.pk])
+    season = season_factory.create()
+    url = reverse("seasons-detail", args=[season.pk])
     team1 = team_factory.create(
         name="Polska",
-        league=league,
+        season=season,
     )
     team2 = team_factory.create(
         name="Argentyna",
-        league=league,
+        season=season,
     )
     team3 = team_factory.create(
         name="Meksyk",
-        league=league,
+        season=season,
     )
     match_factory.create(
-        league=league,
+        season=season,
         host=team1,
         visitor=team2,
         host_score=0,
@@ -39,7 +39,7 @@ def test_scoreboard(
         datetime=datetime.now(),
     )
     match_factory.create(
-        league=league,
+        season=season,
         host=team1,
         visitor=team3,
         host_score=0,
@@ -47,7 +47,7 @@ def test_scoreboard(
         datetime=datetime.now(),
     )
     match_factory.create(
-        league=league,
+        season=season,
         host=team3,
         visitor=team2,
         host_score=0,
@@ -55,7 +55,7 @@ def test_scoreboard(
         datetime=datetime.now(),
     )
     match_factory.create(
-        league=league,
+        season=season,
         host=None,
         visitor=None,
         datetime=datetime.now(),

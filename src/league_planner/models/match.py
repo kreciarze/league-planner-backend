@@ -1,11 +1,14 @@
 from django.db import models
+from rest_framework.authtoken.admin import User
+
+from league_planner.models.season import Season
 
 
 class Match(models.Model):
-    league = models.ForeignKey(
-        "league_planner.League",
+    season = models.ForeignKey(
+        Season,
         on_delete=models.CASCADE,
-        verbose_name="Match belong to that League",
+        verbose_name="Match belong to that Season",
     )
     host = models.ForeignKey(
         "league_planner.Team",
@@ -40,4 +43,8 @@ class Match(models.Model):
     )
 
     class Meta:
+        ordering = ["datetime"]
         verbose_name_plural = "matches"
+
+    def is_owner(self, user: User) -> bool:
+        return self.season.is_owner(user)

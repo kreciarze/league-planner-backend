@@ -16,3 +16,6 @@ class League(models.Model):
 
     class Meta:
         ordering = ["id"]
+
+    def is_owner(self, user: User) -> bool:
+        return user == self.owner

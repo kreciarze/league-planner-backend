@@ -7,8 +7,7 @@ from rest_framework.test import APIClient
 from league_planner.models.league import League
 from league_planner.models.match import Match
 from league_planner.models.team import Team
-
-from .factories import LeagueFactory, MatchFactory, TeamFactory
+from league_planner.tests.factories import LeagueFactory, MatchFactory, SeasonFactory, TeamFactory
 
 pytestmark = [pytest.mark.django_db]
 
@@ -21,8 +20,8 @@ def create_league_data() -> dict:
 
 
 def test_leagues_list(
-    api_client: "APIClient",
-    league_factory: "LeagueFactory",
+    api_client: APIClient,
+    league_factory: LeagueFactory,
 ) -> None:
     url = reverse("leagues-list")
     league = league_factory.create(name="league0")
@@ -35,8 +34,8 @@ def test_leagues_list(
 
 
 def test_league_detail(
-    api_client: "APIClient",
-    league_factory: "LeagueFactory",
+    api_client: APIClient,
+    league_factory: LeagueFactory,
 ) -> None:
     league = league_factory.create(name="NBA")
     url = reverse("leagues-detail", args=[league.pk])
@@ -47,8 +46,8 @@ def test_league_detail(
 
 
 def test_league_create(
-    api_client: "APIClient",
-    test_user: "User",
+    api_client: APIClient,
+    test_user: User,
     create_league_data: dict,
 ) -> None:
     url = reverse("leagues-list")
@@ -62,10 +61,10 @@ def test_league_create(
 
 
 def test_league_update(
-    api_client: "APIClient",
-    league_factory: "LeagueFactory",
+    api_client: APIClient,
+    league_factory: LeagueFactory,
     create_league_data: dict,
-    test_user: "User",
+    test_user: User,
 ) -> None:
     create_league_data["owner"] = test_user
     league = league_factory.create(**create_league_data)
@@ -79,15 +78,17 @@ def test_league_update(
 
 
 def test_league_destroy(
-    api_client: "APIClient",
-    league_factory: "LeagueFactory",
-    team_factory: "TeamFactory",
-    match_factory: "MatchFactory",
-    test_user: "User",
+    api_client: APIClient,
+    league_factory: LeagueFactory,
+    season_factory: SeasonFactory,
+    team_factory: TeamFactory,
+    match_factory: MatchFactory,
+    test_user: User,
 ) -> None:
     league = league_factory.create(owner=test_user)
-    team = team_factory.create(league=league)
-    match = match_factory.create(league=league, host=team)
+    season = season_factory.create(league=league)
+    team = team_factory.create(season=season)
+    match = match_factory.create(season=season, host=team)
     url = reverse("leagues-detail", args=[league.pk])
     response = api_client.delete(url)
     assert response.status_code == status.HTTP_204_NO_CONTENT, response
@@ -100,8 +101,8 @@ def test_league_destroy(
 
 
 def test_league_user_is_not_owner(
-    api_client: "APIClient",
-    league_factory: "LeagueFactory",
+    api_client: APIClient,
+    league_factory: LeagueFactory,
 ) -> None:
     league = league_factory.create()
     url = reverse("leagues-detail", args=[league.pk])

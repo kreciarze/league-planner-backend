@@ -6,6 +6,7 @@ from factory.django import DjangoModelFactory
 
 from league_planner.models.league import League
 from league_planner.models.match import Match
+from league_planner.models.season import Season
 from league_planner.models.team import Team
 
 
@@ -27,9 +28,18 @@ class LeagueFactory(DjangoModelFactory):
         django_get_or_create = ("name",)
 
 
+class SeasonFactory(DjangoModelFactory):
+    name = Sequence(lambda n: f"season{n}")
+    league = SubFactory(LeagueFactory)
+
+    class Meta:
+        model = Season
+        django_get_or_create = ("name",)
+
+
 class TeamFactory(DjangoModelFactory):
     name = Sequence(lambda n: f"team{n}")
-    league = SubFactory(LeagueFactory)
+    season = SubFactory(SeasonFactory)
     city = "Sosnowiec"
 
     class Meta:
@@ -38,7 +48,7 @@ class TeamFactory(DjangoModelFactory):
 
 
 class MatchFactory(DjangoModelFactory):
-    league = SubFactory(LeagueFactory)
+    season = SubFactory(SeasonFactory)
     host = SubFactory(TeamFactory)
     visitor = SubFactory(TeamFactory)
     host_score = 20
