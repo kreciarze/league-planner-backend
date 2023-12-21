@@ -8,13 +8,14 @@ from pytest_factoryboy import register
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
 
-from .factories import LeagueFactory, MatchFactory, TeamFactory, UserFactory
+from .factories import LeagueFactory, MatchFactory, SeasonFactory, TeamFactory, UserFactory
 
 pytestmark = [pytest.mark.django_db]
 
 
 register(UserFactory)
 register(LeagueFactory)
+register(SeasonFactory)
 register(TeamFactory)
 register(MatchFactory)
 

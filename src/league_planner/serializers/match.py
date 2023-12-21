@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from league_planner.models.league import League
 from league_planner.models.match import Match
+from league_planner.models.season import Season
 from league_planner.models.team import Team
 from league_planner.serializers.team import TeamSerializer
 from league_planner.settings import DEFAULT_DATETIME_FORMAT
@@ -9,7 +9,7 @@ from league_planner.settings import DEFAULT_DATETIME_FORMAT
 
 class MatchSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)  # noqa: A003
-    league = serializers.PrimaryKeyRelatedField(queryset=League.objects.all())
+    season = serializers.PrimaryKeyRelatedField(queryset=Season.objects.all())
     host = serializers.PrimaryKeyRelatedField(
         queryset=Team.objects.all(),
         required=False,
@@ -39,7 +39,7 @@ class MatchSerializer(serializers.ModelSerializer):
         model = Match
         fields = (
             "id",
-            "league",
+            "season",
             "host",
             "host_score",
             "visitor",

@@ -8,10 +8,10 @@ from rest_framework.mixins import (
 )
 from rest_framework.permissions import IsAuthenticated
 
-from league_planner.filters import FilterByLeague
+from league_planner.filters import FilterBySeason
 from league_planner.models.match import Match
 from league_planner.pagination import Pagination
-from league_planner.permissions import IsLeagueResourceOwner
+from league_planner.permissions import IsSeasonResourceOwner
 from league_planner.serializers.match import MatchDetailSerializer, MatchSerializer
 
 
@@ -23,11 +23,11 @@ class MatchViewSet(
     UpdateModelMixin,
     DestroyModelMixin,
 ):
-    permission_classes = (IsAuthenticated, IsLeagueResourceOwner)
+    permission_classes = (IsAuthenticated, IsSeasonResourceOwner)
     queryset = Match.objects.all()
     serializer_class = MatchSerializer
     pagination_class = Pagination
-    filterset_class = FilterByLeague
+    filterset_class = FilterBySeason
 
     def get_serializer_class(self) -> type[MatchSerializer]:
         if self.action in ["list", "retrieve"]:

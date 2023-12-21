@@ -12,10 +12,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from league_planner.filters import FilterByLeague
+from league_planner.filters import FilterBySeason
 from league_planner.models.team import Team
 from league_planner.pagination import Pagination
-from league_planner.permissions import IsLeagueResourceOwner
+from league_planner.permissions import IsSeasonResourceOwner
 from league_planner.serializers.team import TeamImageSerializer, TeamSerializer
 
 
@@ -27,11 +27,11 @@ class TeamViewSet(
     UpdateModelMixin,
     DestroyModelMixin,
 ):
-    permission_classes = (IsAuthenticated, IsLeagueResourceOwner)
+    permission_classes = (IsAuthenticated, IsSeasonResourceOwner)
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
     pagination_class = Pagination
-    filterset_class = FilterByLeague
+    filterset_class = FilterBySeason
 
     @action(
         methods=["POST"],

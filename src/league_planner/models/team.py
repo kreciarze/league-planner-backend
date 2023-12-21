@@ -1,11 +1,14 @@
 from django.db import models
+from rest_framework.authtoken.admin import User
+
+from league_planner.models.season import Season
 
 
 class Team(models.Model):
-    league = models.ForeignKey(
-        "league_planner.League",
+    season = models.ForeignKey(
+        Season,
         on_delete=models.CASCADE,
-        verbose_name="Team belong to that League",
+        verbose_name="Team belong to that Season",
     )
     name = models.CharField(
         max_length=50,
@@ -26,3 +29,6 @@ class Team(models.Model):
 
     class Meta:
         ordering = ["number"]
+
+    def is_owner(self, user: User) -> bool:
+        return self.season.is_owner(user)

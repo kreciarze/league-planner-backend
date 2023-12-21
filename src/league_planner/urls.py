@@ -4,11 +4,13 @@ from rest_framework.routers import SimpleRouter
 
 from league_planner.views.league import LeagueViewSet
 from league_planner.views.match import MatchViewSet
+from league_planner.views.season import SeasonViewSet
 from league_planner.views.team import TeamViewSet
 from league_planner.views.user import CreateUserView, LoginView
 
 router = SimpleRouter()
 router.register("leagues", LeagueViewSet, "leagues")
+router.register("seasons", SeasonViewSet, "seasons")
 router.register("teams", TeamViewSet, "teams")
 router.register("matches", MatchViewSet, "matches")
 router.register("register", CreateUserView, "register")
