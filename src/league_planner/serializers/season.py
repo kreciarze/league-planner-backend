@@ -2,20 +2,17 @@ from rest_framework import serializers
 
 from league_planner.models.league import League
 from league_planner.models.season import Season
-from league_planner.settings import DEFAULT_DATETIME_FORMAT
 
 
 class SeasonSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)  # noqa: A003
     league = serializers.PrimaryKeyRelatedField(queryset=League.objects.all())
     name = serializers.CharField()
-    start_date = serializers.DateTimeField(
+    start_date = serializers.DateField(
         required=False,
-        format=DEFAULT_DATETIME_FORMAT,
     )
-    end_date = serializers.DateTimeField(
+    end_date = serializers.DateField(
         required=False,
-        format=DEFAULT_DATETIME_FORMAT,
     )
     points_per_win = serializers.IntegerField(
         required=False,
