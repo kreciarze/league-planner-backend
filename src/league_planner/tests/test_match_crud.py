@@ -64,7 +64,7 @@ def test_match_detail(
     url = reverse("matches-detail", args=[match.pk])
     response = api_client.get(url)
     assert response.status_code == status.HTTP_200_OK, response
-    assert response.data["season"] == season.pk
+    assert response.data["season"] == model_to_dict(season)
     assert response.data["host"] == model_to_dict(host, exclude=["image"])
     assert response.data["visitor"] == model_to_dict(visitor, exclude=["image"])
     assert response.data["host_score"] == create_match_data["host_score"]

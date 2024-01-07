@@ -16,7 +16,7 @@ from league_planner.filters import FilterBySeason
 from league_planner.models.team import Team
 from league_planner.pagination import Pagination
 from league_planner.permissions import IsSeasonResourceOwner
-from league_planner.serializers.team import TeamImageSerializer, TeamSerializer
+from league_planner.serializers.team import TeamDetailSerializer, TeamImageSerializer, TeamSerializer
 
 
 class TeamViewSet(
@@ -32,6 +32,11 @@ class TeamViewSet(
     serializer_class = TeamSerializer
     pagination_class = Pagination
     filterset_class = FilterBySeason
+
+    def get_serializer_class(self) -> type[TeamSerializer]:
+        if self.action in ["list", "retrieve"]:
+            return TeamDetailSerializer
+        return TeamSerializer
 
     @action(
         methods=["POST"],

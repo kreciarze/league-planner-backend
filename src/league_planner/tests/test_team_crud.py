@@ -1,5 +1,6 @@
 import pytest
 from django.contrib.auth.models import User
+from django.forms import model_to_dict
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
@@ -56,7 +57,7 @@ def test_teams_filtering(
     response = api_client.get(f"{url}?season={season1.pk}")
     assert response.status_code == status.HTTP_200_OK, response
     assert response.data["count"] == 5
-    assert response.data["results"][0]["season"] == season1.pk
+    assert response.data["results"][0]["season"] == model_to_dict(season1)
     assert response.data["results"][0]["name"] is not None
     assert response.data["results"][0]["city"] is not None
     assert response.data["results"][0]["number"] is None
@@ -75,7 +76,7 @@ def test_team_detail(
     url = reverse("teams-detail", args=[team.pk])
     response = api_client.get(url)
     assert response.status_code == status.HTTP_200_OK, response
-    assert response.data["season"] == season.pk
+    assert response.data["season"] == model_to_dict(season)
     assert response.data["name"] == team.name
     assert response.data["city"] == team.city
     assert response.data["number"] == team.number

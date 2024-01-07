@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from league_planner.models.season import Season
 from league_planner.models.team import Team
+from league_planner.serializers.season import SeasonSerializer
 
 
 class TeamSerializer(serializers.ModelSerializer):
@@ -14,6 +15,10 @@ class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = ("id", "season", "name", "city", "number")
+
+
+class TeamDetailSerializer(TeamSerializer):
+    season = SeasonSerializer(read_only=True)
 
 
 class TeamImageSerializer(serializers.Serializer):
